@@ -96,12 +96,13 @@ body {
 }
 
 .sidebar-brand {
-  padding: 24px 22px 20px;
+  padding: 24px 20px 22px;
   position: relative;
   overflow: hidden;
   background: var(--grad-berfest-main);
   color: #fff;
   border-bottom-right-radius: 36px;
+  flex-shrink: 0;
 }
 
 .sidebar-brand::before {
@@ -131,14 +132,14 @@ body {
 .brand-top {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   position: relative;
   z-index: 2;
 }
 
 .berfest-logo-mark {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: #FFFFFF;
   display: flex;
@@ -158,17 +159,27 @@ body {
 }
 
 .brand-titles h1 {
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #FFFFFF;
 }
 
-.brand-titles p {
-  font-size: 0.75rem;
-  opacity: 0.92;
-  font-weight: 500;
+.brand-titles .brand-course-name {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #FEF3C7;
   margin-top: 2px;
+  line-height: 1.3;
+}
+
+.brand-titles .brand-inst-name {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 2px;
+  line-height: 1.3;
 }
 
 .student-progress-card {
@@ -178,6 +189,7 @@ body {
   background: var(--grad-berfest-soft);
   border: 1px solid var(--border-warm);
   position: relative;
+  flex-shrink: 0;
 }
 
 .progress-header {
