@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DFK40063 Server Administration | Platform Pembelajaran Interaktif</title>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- BERFEST SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-top">
+          <div class="berfest-logo-mark" title="DFK40063 Server Administration">
+            <span></span>
+          </div>
+          <div class="brand-titles">
+            <h1>DFK40063</h1>
+            <p>Server Administration Hub</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAMIFICATION & PROGRESS TRACKER -->
+      <div class="student-progress-card">
+        <div class="progress-header">
+          <span>Kemajuan Pembelajaran</span>
+          <span class="xp-badge" id="xp-badge-val">0 XP</span>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="overall-progress-fill"></div>
+        </div>
+        <div class="progress-subtext">
+          <span id="progress-completed-text">0/5 Topik Kuiz | 0/6 Misi CLI</span>
+          <span>Sem 4 / Tahun 2</span>
+        </div>
+      </div>
+
+      <div class="nav-section-label">SILIBUS KURSUS (TOPIK 1.0 – 5.0)</div>
+      <ul class="nav-list" id="topic-nav-list">
+        <!-- Diisi secara dinamik oleh js/app.js -->
+      </ul>
+
+      <div class="sidebar-footer">
+        <strong>Jabatan Pendidikan Politeknik & Kolej Komuniti (JPPKK)</strong><br />
+        DFK40063 Server Administration • Berfest Interactive Design
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT WORKSPACE -->
+    <div class="main-area">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Menu">☰</button>
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="global-search-input"
+            placeholder="Cari topik, arahan Linux/Windows (cth: chmod, useradd, SSH, Active Directory, tar)..."
+          />
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-pill btn-pill-outline" id="btn-toggle-presentation" title="Besarkan paparan untuk pancaran projektor di dalam kelas">
+            📽️ Mod Pembentangan Kelas
+          </button>
+          <button class="btn-pill btn-pill-primary" id="btn-open-terminal-top">
+            💻 Simulator Terminal Linux
+          </button>
+        </div>
+      </header>
+
+      <!-- MAIN DYNAMIC CONTAINER -->
+      <main class="content-wrapper" id="main-content-container">
+        <!-- Kandungan Topik, Nota, Step-by-Step, Simulasi & Kuiz dipaparkan di sini -->
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts Data & App -->
+  <script src="js/data-topics-1-2.js"></script>
+  <script src="js/data-topic-3.js"></script>
+  <script src="js/data-topics-4-5.js"></script>
+  <script src="js/terminal-sim.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

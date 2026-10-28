@@ -1,0 +1,1656 @@
+/* ==========================================================================
+   DFK40063 SERVER ADMINISTRATION - BERFEST INTERACTIVE DESIGN SYSTEM
+   Inspired by Berfest Studio Presentation Template:
+   - Crisp white & soft warm-grey surfaces
+   - Deep Crimson (#991B1B) -> Vibrant Orange (#EA580C) -> Golden Amber (#F59E0B)
+   - Organic curved shapes, floating cards, circular badges & device mockups
+   ========================================================================== */
+
+:root {
+  --bg-main: #F3F4F6;
+  --bg-surface: #FFFFFF;
+  --bg-soft: #FFF7ED;
+  --bg-soft-amber: #FEF3C7;
+  --bg-dark: #111827;
+  
+  --berfest-crimson: #991B1B;
+  --berfest-red: #DC2626;
+  --berfest-orange: #EA580C;
+  --berfest-orange-light: #F97316;
+  --berfest-amber: #F59E0B;
+  --berfest-yellow: #FBBF24;
+
+  --grad-berfest-main: linear-gradient(135deg, #991B1B 0%, #EA580C 52%, #F59E0B 100%);
+  --grad-berfest-warm: linear-gradient(135deg, #EA580C 0%, #F59E0B 60%, #FBBF24 100%);
+  --grad-berfest-crimson: linear-gradient(135deg, #7F1D1D 0%, #B91C1C 50%, #EA580C 100%);
+  --grad-berfest-soft: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  --grad-berfest-card: linear-gradient(180deg, #FFFFFF 0%, #FFFBEB 100%);
+
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+  --text-on-brand: #FFFFFF;
+
+  --border-light: #E5E7EB;
+  --border-warm: #FED7AA;
+
+  --shadow-sm: 0 4px 12px rgba(17, 24, 39, 0.05);
+  --shadow-card: 0 14px 34px rgba(17, 24, 39, 0.07), 0 4px 12px rgba(234, 88, 12, 0.05);
+  --shadow-floating: 0 22px 48px rgba(153, 27, 27, 0.14), 0 8px 20px rgba(234, 88, 12, 0.1);
+  --shadow-pill: 0 8px 20px rgba(234, 88, 12, 0.3);
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-main);
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(circle at 92% 8%, rgba(245, 158, 11, 0.12) 0%, transparent 32%),
+    radial-gradient(circle at 6% 85%, rgba(220, 38, 38, 0.08) 0%, transparent 35%);
+}
+
+/* ==========================================================================
+   LAYOUT SHELL (SIDEBAR + MAIN CONTENT)
+   ========================================================================== */
+.app-shell {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   BERFEST SIDEBAR
+   ========================================================================== */
+.sidebar {
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 40;
+  box-shadow: 6px 0 28px rgba(0, 0, 0, 0.04);
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 24px 22px 20px;
+  position: relative;
+  overflow: hidden;
+  background: var(--grad-berfest-main);
+  color: #fff;
+  border-bottom-right-radius: 36px;
+}
+
+.sidebar-brand::before {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.45) 0%, transparent 70%);
+  top: -40px;
+  right: -40px;
+  pointer-events: none;
+}
+
+.sidebar-brand::after {
+  content: '';
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 14px solid rgba(255, 255, 255, 0.12);
+  bottom: -30px;
+  left: -20px;
+  pointer-events: none;
+}
+
+.brand-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.berfest-logo-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.berfest-logo-mark span {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, var(--berfest-amber) 0deg 260deg, var(--berfest-crimson) 260deg 360deg);
+  display: inline-block;
+}
+
+.brand-titles h1 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.brand-titles p {
+  font-size: 0.75rem;
+  opacity: 0.92;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.student-progress-card {
+  margin: 16px 16px 8px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  background: var(--grad-berfest-soft);
+  border: 1px solid var(--border-warm);
+  position: relative;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--berfest-crimson);
+  margin-bottom: 8px;
+}
+
+.xp-badge {
+  background: var(--grad-berfest-warm);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25);
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 8px;
+  background: #FED7AA;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--grad-berfest-main);
+  border-radius: var(--radius-pill);
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+.progress-subtext {
+  font-size: 0.71rem;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Navigation List */
+.nav-section-label {
+  padding: 14px 20px 6px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-item {
+  border-radius: 14px;
+  transition: var(--transition);
+}
+
+.nav-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: none;
+  background: transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: var(--transition);
+  color: var(--text-secondary);
+  position: relative;
+}
+
+.nav-btn:hover {
+  background: var(--bg-soft);
+  color: var(--berfest-orange);
+  transform: translateX(3px);
+}
+
+.nav-btn.active {
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-pill);
+  font-weight: 700;
+}
+
+.nav-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #F3F4F6;
+  color: var(--berfest-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.nav-btn.active .nav-num {
+  background: rgba(255, 255, 255, 0.22);
+  color: #FFFFFF;
+}
+
+.nav-text {
+  flex: 1;
+  overflow: hidden;
+}
+
+.nav-title {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-subtitle {
+  display: block;
+  font-size: 0.7rem;
+  opacity: 0.78;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.nav-btn.completed .nav-check {
+  display: flex;
+}
+
+.nav-btn.active.completed .nav-check {
+  background: #FFFFFF;
+  color: var(--berfest-orange);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px;
+  border-top: 1px solid var(--border-light);
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ==========================================================================
+   MAIN WORKSPACE & TOPBAR
+   ========================================================================== */
+.main-area {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-light);
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 460px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px 16px 10px 40px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-light);
+  background: #F9FAFB;
+  font-family: inherit;
+  font-size: 0.86rem;
+  transition: var(--transition);
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--berfest-orange);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.12);
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--berfest-orange);
+  font-size: 0.95rem;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-pill {
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+}
+
+.btn-pill-primary {
+  background: var(--grad-berfest-warm);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-pill);
+}
+
+.btn-pill-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(234, 88, 12, 0.38);
+}
+
+.btn-pill-outline {
+  background: #FFFFFF;
+  color: var(--berfest-crimson);
+  border: 1.5px solid var(--border-warm);
+}
+
+.btn-pill-outline:hover {
+  background: var(--bg-soft);
+  border-color: var(--berfest-orange);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: var(--grad-berfest-warm);
+  color: #fff;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   CONTENT CONTAINER & BERFEST SLIDE-STYLE HERO CARDS
+   ========================================================================== */
+.content-wrapper {
+  padding: 28px 36px 60px;
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Berfest Hero Slide Card */
+.berfest-hero {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  padding: 40px 44px;
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 32px;
+  align-items: center;
+  border: 1px solid rgba(234, 88, 12, 0.12);
+}
+
+/* Organic Berfest Decorative Blobs */
+.berfest-hero::before {
+  content: '';
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: var(--grad-berfest-main);
+  opacity: 0.95;
+  z-index: 1;
+}
+
+.berfest-hero::after {
+  content: '';
+  position: absolute;
+  right: 220px;
+  bottom: -95px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: var(--grad-berfest-warm);
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.hero-left {
+  position: relative;
+  z-index: 3;
+}
+
+.berfest-corner-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-soft);
+  border: 1px solid var(--border-warm);
+  color: var(--berfest-orange);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+
+.berfest-corner-tag .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--berfest-orange);
+}
+
+.hero-left h2 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+
+.hero-left h2 .accent-text {
+  background: var(--grad-berfest-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-left p {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 22px;
+  max-width: 600px;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.clo-pill {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.clo-pill span {
+  background: var(--grad-berfest-main);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.hero-right {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Floating white card inside Hero right (exactly like Berfest template!) */
+.berfest-floating-stat {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  padding: 18px 22px;
+  border-radius: 20px;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.16);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transform: translateX(-10px);
+  border-left: 5px solid var(--berfest-amber);
+}
+
+.berfest-floating-stat:nth-child(2) {
+  transform: translateX(14px);
+  border-left-color: var(--berfest-crimson);
+}
+
+.stat-ring {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: conic-gradient(var(--berfest-orange) 0% 85%, #FEE2E2 85% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-ring-inner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.78rem;
+  color: var(--berfest-crimson);
+}
+
+.stat-info h4 {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.stat-info p {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   MODE / SECTION TABS WITHIN A TOPIC
+   ========================================================================== */
+.mode-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 26px;
+  background: #FFFFFF;
+  padding: 8px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+}
+
+.mode-tab-btn {
+  flex: 1;
+  min-width: 170px;
+  padding: 13px 18px;
+  border: none;
+  background: transparent;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.mode-tab-btn:hover {
+  background: var(--bg-soft);
+  color: var(--berfest-orange);
+}
+
+.mode-tab-btn.active {
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-pill);
+}
+
+.mode-tab-badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.mode-tab-btn.active .mode-tab-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+/* ==========================================================================
+   BERFEST SLIDE CARDS FOR NOTES (NOTA LENGKAP)
+   ========================================================================== */
+.subtopic-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.subtopic-chip {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.subtopic-chip:hover {
+  border-color: var(--berfest-orange);
+  color: var(--berfest-orange);
+}
+
+.subtopic-chip.active {
+  background: var(--grad-berfest-warm);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.25);
+}
+
+.notes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.berfest-note-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(234, 88, 12, 0.1);
+  overflow: hidden;
+  position: relative;
+  transition: var(--transition);
+}
+
+.berfest-note-card:hover {
+  box-shadow: var(--shadow-floating);
+}
+
+.note-card-header {
+  padding: 24px 30px;
+  background: linear-gradient(90deg, #FFF7ED 0%, #FFFFFF 65%, #FEF3C7 100%);
+  border-bottom: 1px solid var(--border-warm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+}
+
+.note-code-badge {
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 12px rgba(153, 27, 27, 0.25);
+  flex-shrink: 0;
+}
+
+.note-title-group {
+  flex: 1;
+}
+
+.note-title-group h3 {
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.note-title-group p {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.note-card-body {
+  padding: 28px 30px;
+}
+
+.concept-explanation-box {
+  background: var(--grad-berfest-soft);
+  border-left: 5px solid var(--berfest-orange);
+  padding: 18px 22px;
+  border-radius: 0 16px 16px 0;
+  margin-bottom: 24px;
+}
+
+.concept-explanation-box h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--berfest-crimson);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.concept-explanation-box p {
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+/* Berfest 3-Column or 2-Column Feature Cards inside Notes */
+.berfest-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin: 20px 0;
+}
+
+.berfest-mini-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.berfest-mini-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--grad-berfest-warm);
+}
+
+.berfest-mini-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--berfest-amber);
+  box-shadow: var(--shadow-card);
+}
+
+.mini-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 14px rgba(234, 88, 12, 0.25);
+}
+
+.berfest-mini-card h5 {
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.berfest-mini-card p {
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.berfest-mini-card ul {
+  margin-top: 10px;
+  padding-left: 18px;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* Comparison / Reference Tables */
+.berfest-table-wrap {
+  overflow-x: auto;
+  margin: 18px 0;
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.berfest-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FFFFFF;
+  font-size: 0.87rem;
+}
+
+.berfest-table th {
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  text-align: left;
+  padding: 13px 16px;
+  font-weight: 700;
+}
+
+.berfest-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.berfest-table tr:last-child td {
+  border-bottom: none;
+}
+
+.berfest-table tr:nth-child(even) td {
+  background: #FFFBEB;
+}
+
+.cmd-inline {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  background: #1F2937;
+  color: #FBBF24;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.81rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   JALAN KERJA STEP-BY-STEP (HANDS-ON LAB GUIDE)
+   ========================================================================== */
+.step-player-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.step-lab-selector {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-light);
+}
+
+.step-lab-selector h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--berfest-crimson);
+  margin-bottom: 12px;
+  padding: 0 6px;
+}
+
+.lab-list-btn {
+  width: 100%;
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.lab-list-btn:hover {
+  background: var(--bg-soft);
+  border-color: var(--border-warm);
+}
+
+.lab-list-btn.active {
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-pill);
+}
+
+.lab-badge-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #FEE2E2;
+  color: var(--berfest-crimson);
+  font-weight: 800;
+  font-size: 0.76rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lab-list-btn.active .lab-badge-num {
+  background: #FFFFFF;
+  color: var(--berfest-crimson);
+}
+
+.lab-btn-info strong {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.lab-btn-info span {
+  font-size: 0.73rem;
+  opacity: 0.8;
+}
+
+/* Step-by-Step Main Stage (Berfest Device Mockup Style) */
+.step-stage-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+}
+
+.step-stage-header {
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  padding: 24px 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-stage-header::after {
+  content: '';
+  position: absolute;
+  right: -30px;
+  bottom: -50px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(251, 191, 36, 0.28);
+}
+
+.step-stage-body {
+  padding: 28px 30px;
+}
+
+.step-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.step-item-card {
+  border: 1.5px solid var(--border-light);
+  border-radius: 18px;
+  padding: 20px 24px;
+  background: #FFFFFF;
+  position: relative;
+  transition: var(--transition);
+}
+
+.step-item-card:hover {
+  border-color: var(--berfest-orange);
+  box-shadow: var(--shadow-sm);
+}
+
+.step-item-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.step-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--grad-berfest-warm);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+  flex-shrink: 0;
+}
+
+.step-item-top h4 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.step-desc {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+/* Terminal / Command Code Box inside Step */
+.terminal-code-box {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 10px;
+  border: 1px solid #334155;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+}
+
+.terminal-bar {
+  background: #1E293B;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.74rem;
+  color: #94A3B8;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.terminal-dots span:nth-child(1) { background: #EF4444; }
+.terminal-dots span:nth-child(2) { background: #F59E0B; }
+.terminal-dots span:nth-child(3) { background: #10B981; }
+
+.copy-cmd-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FBBF24;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.copy-cmd-btn:hover {
+  background: var(--berfest-orange);
+  color: #FFFFFF;
+}
+
+.terminal-pre {
+  padding: 16px 18px;
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.terminal-pre .prompt {
+  color: #34D399;
+  font-weight: 700;
+}
+
+.terminal-pre .cmd {
+  color: #FBBF24;
+  font-weight: 700;
+}
+
+.terminal-pre .output {
+  color: #CBD5E1;
+}
+
+.step-why-note {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #FEF3C7;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  color: #92400E;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+/* ==========================================================================
+   INTERACTIVE SIMULATORS & TOOLS (CHMOD, FHS, TERMINAL, AD, BACKUP)
+   ========================================================================== */
+.interactive-widget-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-warm);
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+
+.widget-header {
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.widget-body {
+  padding: 26px 28px;
+}
+
+/* Chmod Calculator Grid */
+.chmod-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.chmod-col {
+  background: var(--bg-soft);
+  border: 1.5px solid var(--border-warm);
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.chmod-col h5 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--berfest-crimson);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chmod-check-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--border-light);
+}
+
+.chmod-result-banner {
+  background: #0F172A;
+  color: #FFFFFF;
+  padding: 20px 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.chmod-big-octal {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #FBBF24;
+  font-family: monospace;
+}
+
+.chmod-big-sym {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #34D399;
+  font-family: monospace;
+}
+
+/* Full Interactive Linux Terminal Emulator */
+.live-terminal-layout {
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: 22px;
+}
+
+.mission-panel {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-light);
+}
+
+.mission-item {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border-light);
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.mission-item:hover {
+  border-color: var(--berfest-orange);
+  background: var(--bg-soft);
+}
+
+.mission-item.done {
+  border-color: #10B981;
+  background: #ECFDF5;
+}
+
+.mission-item-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+
+.mission-item.done .mission-item-header {
+  color: #065F46;
+}
+
+.terminal-window {
+  background: #0B1120;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+  border: 2px solid #1E293B;
+  display: flex;
+  flex-direction: column;
+  height: 560px;
+}
+
+.terminal-window-header {
+  background: linear-gradient(90deg, #1E293B 0%, #0F172A 100%);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #334155;
+}
+
+.terminal-title {
+  color: #E2E8F0;
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.terminal-quick-cmds {
+  padding: 8px 14px;
+  background: #162033;
+  border-bottom: 1px solid #1E293B;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.quick-cmd-chip {
+  background: rgba(251, 191, 36, 0.14);
+  color: #FBBF24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quick-cmd-chip:hover {
+  background: var(--berfest-orange);
+  color: #FFFFFF;
+}
+
+.terminal-output-screen {
+  flex: 1;
+  padding: 18px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #E2E8F0;
+}
+
+.term-line {
+  margin-bottom: 6px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.term-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: #0F172A;
+  border-top: 1px solid #1E293B;
+}
+
+.term-prompt-label {
+  color: #34D399;
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.term-input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #FBBF24;
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  outline: none;
+}
+
+/* ==========================================================================
+   QUIZ & LATIHAN INTERAKTIF MENGIKUT TOPIK
+   ========================================================================== */
+.quiz-header-card {
+  background: var(--grad-berfest-main);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 26px 32px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  box-shadow: var(--shadow-floating);
+}
+
+.quiz-score-circle {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  padding: 14px 24px;
+  border-radius: 18px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.quiz-score-circle strong {
+  font-size: 1.65rem;
+  display: block;
+}
+
+.quiz-question-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 26px 30px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-card);
+  border: 1.5px solid var(--border-light);
+  transition: var(--transition);
+}
+
+.quiz-q-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.quiz-q-num {
+  background: var(--grad-berfest-warm);
+  color: #FFFFFF;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+
+.quiz-q-text {
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.quiz-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.quiz-opt-btn {
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border-light);
+  background: #F9FAFB;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quiz-opt-btn:hover:not(:disabled) {
+  border-color: var(--berfest-orange);
+  background: var(--bg-soft);
+  transform: translateY(-2px);
+}
+
+.quiz-opt-letter {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #E5E7EB;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.78rem;
+  flex-shrink: 0;
+}
+
+.quiz-opt-btn.correct {
+  background: #ECFDF5;
+  border-color: #10B981;
+  color: #065F46;
+}
+
+.quiz-opt-btn.correct .quiz-opt-letter {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.quiz-opt-btn.wrong {
+  background: #FEF2F2;
+  border-color: #EF4444;
+  color: #991B1B;
+}
+
+.quiz-opt-btn.wrong .quiz-opt-letter {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+.quiz-explanation {
+  margin-top: 16px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  background: var(--bg-soft);
+  border-left: 5px solid var(--berfest-orange);
+  font-size: 0.87rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  display: none;
+}
+
+.quiz-explanation.visible {
+  display: block;
+}
+
+/* ==========================================================================
+   LECTURER PRESENTATION MODE (SLIDE DECK VIEW)
+   ========================================================================== */
+body.presentation-mode .sidebar {
+  display: none;
+}
+
+body.presentation-mode .app-shell {
+  grid-template-columns: 1fr;
+}
+
+body.presentation-mode .content-wrapper {
+  max-width: 1440px;
+  font-size: 1.08rem;
+}
+
+body.presentation-mode .berfest-note-card {
+  padding: 10px;
+  margin-bottom: 36px;
+}
+
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 1080px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: fixed;
+    left: -320px;
+    width: 300px;
+    transition: left 0.3s ease;
+  }
+  .sidebar.open {
+    left: 0;
+  }
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .berfest-hero {
+    grid-template-columns: 1fr;
+  }
+  .step-player-container,
+  .live-terminal-layout {
+    grid-template-columns: 1fr;
+  }
+  .chmod-grid,
+  .quiz-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
