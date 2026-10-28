@@ -1,10 +1,9 @@
 /* ==========================================================================
-   DFK40063 SERVER ADMINISTRATION
-   SIMULATOR TERMINAL LINUX INTERAKTIF & MISI AMALI (BERFEST EDITION)
+   DFK40063 SERVER ADMINISTRATION (ENGLISH EDITION)
+   INTERACTIVE LINUX TERMINAL SIMULATOR & GUIDED LAB MISSIONS
    ========================================================================== */
 
 window.LinuxSimulator = (function () {
-  // Virtual state
   let state = {
     user: "student",
     host: "ubuntu-svr",
@@ -61,7 +60,7 @@ window.LinuxSimulator = (function () {
         owner: "root",
         group: "root",
         size: 420,
-        content: "root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nsshd:x:110:65534::/run/sshd:/usr/sbin/nologin\nstudent:x:1000:1000:Pelajar DFK40063,,,:/home/student:/bin/bash"
+        content: "root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nsshd:x:110:65534::/run/sshd:/usr/sbin/nologin\nstudent:x:1000:1000:DFK40063 Student,,,:/home/student:/bin/bash"
       },
       "/etc/group": {
         type: "file",
@@ -89,21 +88,21 @@ window.LinuxSimulator = (function () {
         size: 165,
         content: "# ~/.bashrc: executed by bash(1) for non-login shells.\nalias ll='ls -la'\nalias la='ls -a'"
       },
-      "/home/student/nota_server.txt": {
+      "/home/student/server_notes.txt": {
         type: "file",
         perm: "-rw-r--r--",
         owner: "student",
         group: "student",
         size: 245,
-        content: "Kursus: DFK40063 Server Administration\nTopik 1: Server Distribution in a Network\nTopik 2: Desktop Environment & Shells\nTopik 3: Linux Server Administration\nTopik 4: Windows Server Administration\nTopik 5: Risk Management & Maintenance"
+        content: "Course: DFK40063 Server Administration\nTopic 1: Server Distribution in a Network\nTopic 2: Desktop Environment & Shells\nTopic 3: Linux Server Administration\nTopic 4: Windows Server Administration\nTopic 5: Risk Management & Maintenance"
       },
-      "/home/student/semak.sh": {
+      "/home/student/health_check.sh": {
         type: "file",
         perm: "-rw-r--r--",
         owner: "student",
         group: "student",
         size: 98,
-        content: "#!/bin/bash\necho 'Status Pelayan: AKTIF'\nhostname -I"
+        content: "#!/bin/bash\necho 'Server Status: ACTIVE'\nhostname -I"
       },
       "/var": { type: "dir", perm: "drwxr-xr-x", owner: "root", group: "root", size: 4096 },
       "/var/log": { type: "dir", perm: "drwxr-xr-x", owner: "root", group: "root", size: 4096 },
@@ -123,58 +122,58 @@ window.LinuxSimulator = (function () {
 
   initDefaultFS();
 
-  // Guided Missions for Students
+  // Guided Lab Missions in English
   const missions = [
     {
       id: "m1",
-      topic: "Topik 1 & 2",
-      title: "Misi 1: Semak IP & Pemboleh Ubah Shell",
-      desc: "Jalankan arahan `ip a` untuk melihat alamat IP pelayan, atau `echo $SHELL` untuk melihat shell semasa.",
+      topic: "Topic 1 & 2",
+      title: "Mission 1: Trace IP & Shell Variables",
+      desc: "Run `ip a` to inspect server network interfaces, or `echo $SHELL` to check your active shell.",
       hintCmd: "ip a",
       done: false,
       check: (cmd) => cmd.startsWith("ip a") || cmd.startsWith("ifconfig") || cmd.includes("$SHELL")
     },
     {
       id: "m2",
-      topic: "Topik 3.1 & 3.2",
-      title: "Misi 2: Tapis Fail Log dengan `grep`",
-      desc: "Cari perkataan `ERROR` di dalam `/var/log/syslog` menggunakan arahan `grep -i error /var/log/syslog`.",
+      topic: "Topic 3.1 & 3.2",
+      title: "Mission 2: Search Server Logs with `grep`",
+      desc: "Search for `ERROR` inside `/var/log/syslog` using `grep -i error /var/log/syslog`.",
       hintCmd: "grep -i error /var/log/syslog",
       done: false,
       check: (cmd) => cmd.includes("grep") && cmd.includes("syslog")
     },
     {
       id: "m3",
-      topic: "Topik 3.3",
-      title: "Misi 3: Bina Direktori & Fail Projek",
-      desc: "Cipta sebuah direktori baharu dengan `mkdir projek_jtmk` atau fail baharu dengan `touch ujian.txt`.",
-      hintCmd: "mkdir projek_jtmk",
+      topic: "Topic 3.3",
+      title: "Mission 3: Create Directories & Files",
+      desc: "Create a new directory with `mkdir project_jtmk` or create an empty file with `touch test.txt`.",
+      hintCmd: "mkdir project_jtmk",
       done: false,
       check: (cmd) => cmd.includes("mkdir ") || cmd.includes("touch ")
     },
     {
       id: "m4",
-      topic: "Topik 3.5",
-      title: "Misi 4: Bina Akaun Pengguna Linux",
-      desc: "Cipta akaun pengguna baharu (contoh: `sudo useradd -m azrul`) dan semak `/etc/passwd`.",
+      topic: "Topic 3.5",
+      title: "Mission 4: Construct User Account",
+      desc: "Create a new Linux user account (`sudo useradd -m azrul`) and verify `/etc/passwd`.",
       hintCmd: "sudo useradd -m azrul",
       done: false,
       check: (cmd) => cmd.includes("useradd ") || cmd.includes("adduser ")
     },
     {
       id: "m5",
-      topic: "Topik 3.7",
-      title: "Misi 5: Tukar Keizinan Fail (`chmod`)",
-      desc: "Berikan keizinan boleh laku (`chmod 755 semak.sh` atau `chmod +x semak.sh`) kepada skrip.",
-      hintCmd: "chmod 755 semak.sh",
+      topic: "Topic 3.7",
+      title: "Mission 5: Modify Permissions (`chmod`)",
+      desc: "Grant executable permissions (`chmod 755 health_check.sh` or `chmod +x health_check.sh`) to the script.",
+      hintCmd: "chmod 755 health_check.sh",
       done: false,
       check: (cmd) => cmd.includes("chmod ")
     },
     {
       id: "m6",
-      topic: "Topik 5.1 & 5.2",
-      title: "Misi 6: Backup `tar` & Tamatkan Proses `kill`",
-      desc: "Buat backup `sudo tar -czvf backup.tar.gz /etc` ATAU matikan proses tergantung PID 4821 dengan `kill -9 4821`.",
+      topic: "Topic 5.1 & 5.2",
+      title: "Mission 6: Backup `tar` & Kill Hung Process",
+      desc: "Run `sudo tar -czvf backup.tar.gz /etc` OR terminate hung process PID 4821 with `kill -9 4821`.",
       hintCmd: "kill -9 4821",
       done: false,
       check: (cmd) => cmd.includes("tar ") || cmd.includes("kill ")
@@ -216,7 +215,6 @@ window.LinuxSimulator = (function () {
     let cmdLine = rawCmd.trim();
     if (!cmdLine) return "";
 
-    // Expand simple variables
     cmdLine = cmdLine.replace(/\$(\w+)/g, (_, v) => state.env[v] || "");
 
     let isSudo = false;
@@ -230,7 +228,6 @@ window.LinuxSimulator = (function () {
     let cmd = tokens[0];
     let args = tokens.slice(1);
 
-    // Check aliases
     if (state.aliases[cmd]) {
       const expanded = state.aliases[cmd].split(/\s+/);
       cmd = expanded[0];
@@ -240,15 +237,15 @@ window.LinuxSimulator = (function () {
     switch (cmd) {
       case "help":
         return [
-          "=== PANDUAN ARAHAN SIMULATOR LINUX DFK40063 ===",
-          "Navigasi & FHS : pwd, ls [-la], cd <dir>, file <fail>",
-          "Baca & Cari    : cat, head, tail, grep [-in] <corak> <fail>, find, locate",
-          "Urus Fail      : touch <fail>, mkdir [-p] <dir>, cp, mv, rm [-rf], rmdir",
-          "Shell & Var    : echo, export, printenv, alias, unalias",
-          "Pengguna & Sudo: whoami, id, sudo useradd -m <nama>, passwd, groupadd, su",
-          "Keizinan       : chmod <oktal/+x> <fail>, chown <user:group> <fail>, umask",
-          "Rangkaian      : ip a, ifconfig, ping <ip>, ssh <user@ip>",
-          "Backup & Sistem: tar -czvf <arkib.tar.gz> <dir>, ps aux, lsof, parted -l, kill -9 <PID>, clear, reset"
+          "=== DFK40063 LINUX SIMULATOR COMMAND REFERENCE ===",
+          "Navigation & FHS : pwd, ls [-la], cd <dir>, file <filename>",
+          "View & Search    : cat, head, tail, grep [-in] <pattern> <file>, find, locate",
+          "File Management  : touch <file>, mkdir [-p] <dir>, cp, mv, rm [-rf], rmdir",
+          "Shell & Variables: echo, export, printenv, alias, unalias",
+          "Users & Privilege: whoami, id, sudo useradd -m <name>, passwd, groupadd, su",
+          "Permissions      : chmod <octal/+x> <file>, chown <user:group> <file>, umask",
+          "Networking       : ip a, ifconfig, ping <ip>, ssh <user@ip>",
+          "Backup & Reports : tar -czvf <arch.tar.gz> <dir>, dump, ps aux, lsof, ntop, parted -l, kill -9 <PID>, clear, reset"
         ].join("\n");
 
       case "pwd":
@@ -344,7 +341,7 @@ window.LinuxSimulator = (function () {
         if (!n) return `${cmd}: ${args[0]}: No such file or directory`;
         if (n.type === "dir") return `${cmd}: ${args[0]}: Is a directory`;
         if (p === "/etc/shadow" && !isSudo && state.user !== "root") {
-          return `${cmd}: /etc/shadow: Permission denied (Gunakan 'sudo cat /etc/shadow')`;
+          return `${cmd}: /etc/shadow: Permission denied (Try 'sudo cat /etc/shadow')`;
         }
         return n.content || "";
       }
@@ -387,7 +384,7 @@ window.LinuxSimulator = (function () {
             matched.push(lineNum ? `${idx + 1}:${line}` : line);
           }
         });
-        return matched.join("\n") || "(Tiada baris yang sepadan ditemui)";
+        return matched.join("\n") || "(No matching lines found)";
       }
 
       case "touch": {
@@ -403,7 +400,7 @@ window.LinuxSimulator = (function () {
             content: ""
           };
         }
-        return `Fail '${args[0]}' berjaya dicipta / dikemas kini.`;
+        return `File '${args[0]}' created / timestamp updated successfully.`;
       }
 
       case "mkdir": {
@@ -426,7 +423,7 @@ window.LinuxSimulator = (function () {
             }
           }
         }
-        return `Direktori '${dirArgs.join(", ")}' berjaya dicipta.`;
+        return `Directory '${dirArgs.join(", ")}' created successfully.`;
       }
 
       case "cp": {
@@ -439,7 +436,7 @@ window.LinuxSimulator = (function () {
           dst = (dst === "/" ? "/" : dst + "/") + src.split("/").pop();
         }
         state.fs[dst] = JSON.parse(JSON.stringify(state.fs[src]));
-        return `Disalin '${clean[0]}' -> '${dst}'`;
+        return `Copied '${clean[0]}' -> '${dst}'`;
       }
 
       case "mv": {
@@ -453,7 +450,7 @@ window.LinuxSimulator = (function () {
         }
         state.fs[dst] = state.fs[src];
         delete state.fs[src];
-        return `Dialihkan/Ditukar nama '${clean[0]}' -> '${dst}'`;
+        return `Moved / Renamed '${clean[0]}' -> '${dst}'`;
       }
 
       case "rm":
@@ -466,14 +463,14 @@ window.LinuxSimulator = (function () {
         Object.keys(state.fs).forEach(k => {
           if (k.startsWith(target + "/")) delete state.fs[k];
         });
-        return `'${clean[0]}' telah dipadam.`;
+        return `'${clean[0]}' has been removed.`;
       }
 
       case "find":
       case "locate": {
         const term = args[args.length - 1].replace(/\*/g, "");
         const matches = Object.keys(state.fs).filter(k => k.toLowerCase().includes(term.toLowerCase()));
-        return matches.join("\n") || "(Tiada fail ditemui)";
+        return matches.join("\n") || "(No matching files found)";
       }
 
       case "echo":
@@ -487,7 +484,7 @@ window.LinuxSimulator = (function () {
         if (!args[0]) return Object.entries(state.env).map(([k, v]) => `declare -x ${k}="${v}"`).join("\n");
         const [k, v] = args[0].split("=");
         if (k && v !== undefined) state.env[k] = v;
-        return `Pemboleh ubah persekitaran '${k}' ditetapkan.`;
+        return `Environment variable '${k}' exported.`;
       }
 
       case "alias": {
@@ -498,7 +495,7 @@ window.LinuxSimulator = (function () {
         const [name, val] = joined.split("=");
         if (name && val) {
           state.aliases[name.trim()] = val.replace(/^['"]|['"]$/g, "");
-          return `Alias '${name.trim()}' berjaya ditambah.`;
+          return `Alias '${name.trim()}' added.`;
         }
         return "";
       }
@@ -506,38 +503,38 @@ window.LinuxSimulator = (function () {
       case "unalias": {
         if (args[0] && state.aliases[args[0]]) {
           delete state.aliases[args[0]];
-          return `Alias '${args[0]}' telah dibuang.`;
+          return `Alias '${args[0]}' removed.`;
         }
         return `bash: unalias: ${args[0] || ""}: not found`;
       }
 
       case "useradd":
       case "adduser": {
-        if (!isSudo && state.user !== "root") return "useradd: Permission denied. (Sila guna 'sudo useradd ...')";
+        if (!isSudo && state.user !== "root") return "useradd: Permission denied. (Please use 'sudo useradd ...')";
         const username = args[args.length - 1];
         if (!username || username.startsWith("-")) return "Usage: sudo useradd [-m] <username>";
         if (state.users.some(u => u.name === username)) return `useradd: user '${username}' already exists`;
         const newUid = 1000 + state.users.length;
         state.users.push({ name: username, uid: newUid, gid: newUid, home: `/home/${username}`, shell: "/bin/bash", groups: [username] });
         state.fs[`/home/${username}`] = { type: "dir", perm: "drwxr-xr-x", owner: username, group: username, size: 4096 };
-        state.fs["/etc/passwd"].content += `\n${username}:x:${newUid}:${newUid}:Pengguna Baharu:/home/${username}:/bin/bash`;
+        state.fs["/etc/passwd"].content += `\n${username}:x:${newUid}:${newUid}:New User:/home/${username}:/bin/bash`;
         state.fs["/etc/group"].content += `\n${username}:x:${newUid}:`;
-        return `Akaun pengguna '${username}' (UID=${newUid}) dan direktori '/home/${username}' berjaya dicipta!`;
+        return `User account '${username}' (UID=${newUid}) and home directory '/home/${username}' created successfully!`;
       }
 
       case "groupadd": {
-        if (!isSudo && state.user !== "root") return "groupadd: Permission denied. (Sila guna 'sudo groupadd ...')";
+        if (!isSudo && state.user !== "root") return "groupadd: Permission denied. (Please use 'sudo groupadd ...')";
         const gname = args[args.length - 1];
         if (!gname) return "Usage: sudo groupadd <group_name>";
         const newGid = 1000 + state.groups.length;
         state.groups.push({ name: gname, gid: newGid, members: [] });
         state.fs["/etc/group"].content += `\n${gname}:x:${newGid}:`;
-        return `Kumpulan '${gname}' (GID=${newGid}) berjaya dicipta di dalam /etc/group.`;
+        return `Group '${gname}' (GID=${newGid}) created in /etc/group.`;
       }
 
       case "passwd": {
         const targetUser = args[0] || state.user;
-        return `passwd: password for '${targetUser}' updated successfully (Disimpan secara hash di dalam /etc/shadow).`;
+        return `passwd: password for '${targetUser}' updated successfully (Stored as salted hash in /etc/shadow).`;
       }
 
       case "chmod": {
@@ -561,7 +558,7 @@ window.LinuxSimulator = (function () {
           chars[8] = "-";
           node.perm = chars.join("");
         }
-        return `Keizinan '${args[1]}' dikemas kini kepada ${node.perm} (${mode}).`;
+        return `Permissions for '${args[1]}' updated to ${node.perm} (${mode}).`;
       }
 
       case "chown":
@@ -577,7 +574,7 @@ window.LinuxSimulator = (function () {
         } else {
           node.group = args[0];
         }
-        return `Pemilikan '${args[1]}' ditukar kepada ${node.owner}:${node.group}.`;
+        return `Ownership of '${args[1]}' changed to ${node.owner}:${node.group}.`;
       }
 
       case "umask":
@@ -619,11 +616,11 @@ window.LinuxSimulator = (function () {
           size: 184320,
           content: "[BINARY GZIP TAR ARCHIVE DATA]"
         };
-        return `tar: Mencipta arkib termampat '${archiveName}'...\n/etc/passwd\n/etc/group\n/etc/hosts\nSandaran berjaya disimpan di: ${destPath} (180 KB)`;
+        return `tar: Creating compressed archive '${archiveName}'...\n/etc/passwd\n/etc/group\n/etc/hosts\nBackup archive saved successfully to: ${destPath} (180 KB)`;
       }
 
       case "dump":
-        return "DUMP: Date of this level 0 dump: Wed Oct 28 2026\nDUMP: Dumping /dev/sda1 (/home) to backup.dump\nDUMP: DUMP IS DONE (100% berjaya)";
+        return "DUMP: Date of this level 0 dump: Wed Oct 28 2026\nDUMP: Dumping /dev/sda1 (/home) to backup.dump\nDUMP: DUMP IS DONE (100% completed)";
 
       case "ps": {
         const header = "USER       PID %CPU %MEM COMMAND";
@@ -642,10 +639,10 @@ window.LinuxSimulator = (function () {
       case "ntop":
       case "top":
         return [
-          "=== LAPORAN PEMANTAUAN RANGKAIAN & PROSES (NTOP / TOP) ===",
-          "Antara Muka Aktif: enp0s8 (IP: 192.168.56.101) | Trafik Masuk: 1.4 Mbps | Trafik Keluar: 820 Kbps",
-          "Protokol Utama   : SSH (Port 22) - 45% | HTTP (Port 80) - 40% | DNS (Port 53) - 15%",
-          "Amaran Prestasi  : Proses PID 4821 (hung_script.py) menggunakan 94.5% CPU! Gunakan 'kill -9 4821'."
+          "=== REAL-TIME NETWORK & PROCESS MONITOR (NTOP / TOP) ===",
+          "Active Interface : enp0s8 (IP: 192.168.56.101) | RX: 1.4 Mbps | TX: 820 Kbps",
+          "Top Protocols    : SSH (Port 22) - 45% | HTTP (Port 80) - 40% | DNS (Port 53) - 15%",
+          "Performance Alert: Process PID 4821 (hung_script.py) is using 94.5% CPU! Terminate it with 'kill -9 4821'."
         ].join("\n");
 
       case "parted":
@@ -665,7 +662,7 @@ window.LinuxSimulator = (function () {
         const idx = state.processes.findIndex(p => p.pid === pidArg);
         if (idx === -1) return `bash: kill: (${pidArg}) - No such process`;
         const removed = state.processes.splice(idx, 1)[0];
-        return `[1]+  Killed                  ${removed.cmd} (PID ${removed.pid} berjaya ditamatkan!)`;
+        return `[1]+  Killed                  ${removed.cmd} (PID ${removed.pid} terminated successfully!)`;
       }
 
       case "df":
@@ -680,9 +677,9 @@ window.LinuxSimulator = (function () {
         if (cmd && cmd.includes("=")) {
           const [k, v] = cmdLine.split("=");
           state.env[k.trim()] = v.replace(/^['"]|['"]$/g, "");
-          return `Pemboleh ubah '${k.trim()}' disimpan.`;
+          return `Variable '${k.trim()}' saved.`;
         }
-        return `bash: ${cmd}: command not found (Taip 'help' untuk melihat senarai arahan yang disokong)`;
+        return `bash: ${cmd}: command not found (Type 'help' to view all supported commands)`;
     }
   }
 
@@ -690,7 +687,6 @@ window.LinuxSimulator = (function () {
     const trimmed = fullInput.trim();
     if (!trimmed) return { output: "", missionUnlocked: null };
 
-    // Check missions
     let unlocked = null;
     missions.forEach(m => {
       if (!m.done && m.check(trimmed)) {
@@ -705,10 +701,9 @@ window.LinuxSimulator = (function () {
     if (trimmed === "reset") {
       initDefaultFS();
       state.cwd = "/home/student";
-      return { output: "Sistem fail maya Linux telah ditetapkan semula (Reset) kepada keadaan asal.", missionUnlocked: unlocked };
+      return { output: "Virtual Linux filesystem has been reset to its default state.", missionUnlocked: unlocked };
     }
 
-    // Handle Pipe `|`
     if (trimmed.includes("|")) {
       const pipeParts = trimmed.split("|").map(s => s.trim());
       let currentOut = executeSingle(pipeParts[0]);
@@ -727,7 +722,6 @@ window.LinuxSimulator = (function () {
       return { output: currentOut, missionUnlocked: unlocked };
     }
 
-    // Handle Output Redirection `>` or `>>`
     if (trimmed.includes(">")) {
       const isAppend = trimmed.includes(">>");
       const [leftCmd, rightFile] = trimmed.split(isAppend ? ">>" : ">").map(s => s.trim());
@@ -745,7 +739,7 @@ window.LinuxSimulator = (function () {
           content: outText
         };
       }
-      return { output: `Output disimpan ke dalam '${rightFile}'.`, missionUnlocked: unlocked };
+      return { output: `Output redirected to '${rightFile}'.`, missionUnlocked: unlocked };
     }
 
     return { output: executeSingle(trimmed), missionUnlocked: unlocked };

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DFK40063 Server Administration | Platform Pembelajaran Interaktif</title>
+  <title>DFK40063 Server Administration | Interactive Learning Platform</title>
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,25 +29,25 @@
       <!-- GAMIFICATION & PROGRESS TRACKER -->
       <div class="student-progress-card">
         <div class="progress-header">
-          <span>Kemajuan Pembelajaran</span>
+          <span>Learning Progress</span>
           <span class="xp-badge" id="xp-badge-val">0 XP</span>
         </div>
         <div class="progress-bar-track">
           <div class="progress-bar-fill" id="overall-progress-fill"></div>
         </div>
         <div class="progress-subtext">
-          <span id="progress-completed-text">0/5 Topik Kuiz | 0/6 Misi CLI</span>
-          <span>Sem 4 / Tahun 2</span>
+          <span id="progress-completed-text">0/5 Topic Quizzes | 0/6 CLI Missions</span>
+          <span>Sem 4 / Year 2</span>
         </div>
       </div>
 
-      <div class="nav-section-label">SILIBUS KURSUS (TOPIK 1.0 – 5.0)</div>
+      <div class="nav-section-label">COURSE SYLLABUS (TOPIC 1.0 – 5.0)</div>
       <ul class="nav-list" id="topic-nav-list">
-        <!-- Diisi secara dinamik oleh js/app.js -->
+        <!-- Populated dynamically by js/app.js -->
       </ul>
 
       <div class="sidebar-footer">
-        <strong>Jabatan Pendidikan Politeknik & Kolej Komuniti (JPPKK)</strong><br />
+        <strong>Department of Polytechnic & Community College Education (JPPKK)</strong><br />
         DFK40063 Server Administration • Berfest Interactive Design
       </div>
     </aside>
@@ -62,22 +62,22 @@
           <input
             type="text"
             id="global-search-input"
-            placeholder="Cari topik, arahan Linux/Windows (cth: chmod, useradd, SSH, Active Directory, tar)..."
+            placeholder="Search topics, Linux/Windows commands (e.g., chmod, useradd, SSH, Active Directory, tar)..."
           />
         </div>
         <div class="topbar-actions">
-          <button class="btn-pill btn-pill-outline" id="btn-toggle-presentation" title="Besarkan paparan untuk pancaran projektor di dalam kelas">
-            📽️ Mod Pembentangan Kelas
+          <button class="btn-pill btn-pill-outline" id="btn-toggle-presentation" title="Expand layout for classroom projector presentation">
+            📽️ Classroom Presentation Mode
           </button>
           <button class="btn-pill btn-pill-primary" id="btn-open-terminal-top">
-            💻 Simulator Terminal Linux
+            💻 Linux Terminal Simulator
           </button>
         </div>
       </header>
 
       <!-- MAIN DYNAMIC CONTAINER -->
       <main class="content-wrapper" id="main-content-container">
-        <!-- Kandungan Topik, Nota, Step-by-Step, Simulasi & Kuiz dipaparkan di sini -->
+        <!-- Topic Content, Notes, Step-by-Step Labs, Simulators & Quizzes rendered here -->
       </main>
     </div>
   </div>

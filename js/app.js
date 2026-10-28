@@ -1,5 +1,6 @@
 /* ==========================================================================
-   DFK40063 SERVER ADMINISTRATION - MAIN INTERACTIVE APPLICATION CONTROLLER
+   DFK40063 SERVER ADMINISTRATION (ENGLISH EDITION)
+   MAIN INTERACTIVE APPLICATION CONTROLLER
    ========================================================================== */
 
 (function () {
@@ -40,7 +41,7 @@
 
     const pct = Math.min(100, Math.round(((completedCount * 15) + (doneMissions * 4)) / 99 * 100));
     if (barEl) barEl.style.width = `${pct}%`;
-    if (textEl) textEl.textContent = `${completedCount}/5 Topik Kuiz | ${doneMissions}/6 Misi CLI`;
+    if (textEl) textEl.textContent = `${completedCount}/5 Topic Quizzes | ${doneMissions}/6 CLI Missions`;
   }
 
   // ========================================================================
@@ -62,7 +63,7 @@
             <span class="nav-num">${idx + 1}.0</span>
             <span class="nav-text">
               <span class="nav-title">${t.shortTitle}</span>
-              <span class="nav-subtitle">${t.clo} • ${t.notes.length} Subtopik</span>
+              <span class="nav-subtitle">${t.clo} • ${t.notes.length} Subtopics</span>
             </span>
             <span class="nav-check">✓</span>
           </button>
@@ -72,13 +73,13 @@
 
     // Special Interactive Modules
     html += `
-      <li class="nav-section-label" style="padding-left:8px; margin-top:10px;">MAKMAL & PENILAIAN</li>
+      <li class="nav-section-label" style="padding-left:8px; margin-top:10px;">VIRTUAL LAB & SYLLABUS</li>
       <li class="nav-item">
         <button class="nav-btn ${state.activeView === "terminal-lab" ? "active" : ""}" data-view="terminal-lab">
           <span class="nav-num">💻</span>
           <span class="nav-text">
-            <span class="nav-title">Simulator Terminal Linux</span>
-            <span class="nav-subtitle">6 Misi Amali Interaktif CLI</span>
+            <span class="nav-title">Linux Terminal Simulator</span>
+            <span class="nav-subtitle">6 Guided Interactive CLI Missions</span>
           </span>
         </button>
       </li>
@@ -86,8 +87,8 @@
         <button class="nav-btn ${state.activeView === "course-info" ? "active" : ""}" data-view="course-info">
           <span class="nav-num">📋</span>
           <span class="nav-text">
-            <span class="nav-title">Info Kursus & Penilaian</span>
-            <span class="nav-subtitle">CLO, PLO, SLT & Agihan PB/PA</span>
+            <span class="nav-title">Course Info & Assessments</span>
+            <span class="nav-subtitle">CLO, PLO, SLT & CA/FA Breakdown</span>
           </span>
         </button>
       </li>
@@ -139,7 +140,7 @@
     if (!topic) return;
 
     const savedScore = state.quizScores[topic.id];
-    const scoreBadge = savedScore ? `${savedScore.score}/${savedScore.total}` : `${topic.quizzes.length} Soalan`;
+    const scoreBadge = savedScore ? `${savedScore.score}/${savedScore.total}` : `${topic.quizzes.length} Questions`;
 
     let html = `
       <!-- BERFEST HERO CARD -->
@@ -174,16 +175,16 @@
       <!-- MODE TABS -->
       <nav class="mode-tabs">
         <button class="mode-tab-btn ${state.activeTab === "notes" ? "active" : ""}" data-tab="notes">
-          📖 Nota & Penerangan Jelas <span class="mode-tab-badge">${topic.notes.length} Unit</span>
+          📖 Comprehensive Notes <span class="mode-tab-badge">${topic.notes.length} Subtopics</span>
         </button>
         <button class="mode-tab-btn ${state.activeTab === "labs" ? "active" : ""}" data-tab="labs">
-          🛠️ Jalan Kerja Step-by-Step <span class="mode-tab-badge">${topic.labs.length} Amali</span>
+          🛠️ Step-by-Step Practical Labs <span class="mode-tab-badge">${topic.labs.length} Labs</span>
         </button>
         <button class="mode-tab-btn ${state.activeTab === "sim" ? "active" : ""}" data-tab="sim">
-          ⚡ Simulasi Interaktif <span class="mode-tab-badge">Hands-On</span>
+          ⚡ Interactive Simulator <span class="mode-tab-badge">Hands-On</span>
         </button>
         <button class="mode-tab-btn ${state.activeTab === "quiz" ? "active" : ""}" data-tab="quiz">
-          🎯 Soalan Latihan Topik <span class="mode-tab-badge">${scoreBadge}</span>
+          🎯 Topic Practice Quiz <span class="mode-tab-badge">${scoreBadge}</span>
         </button>
       </nav>
 
@@ -207,7 +208,7 @@
   }
 
   // ========================================================================
-  // 1. NOTA LENGKAP & PENERANGAN JELAS
+  // 1. COMPREHENSIVE NOTES & CLEAR EXPLANATIONS
   // ========================================================================
   function renderTopicNotes(stage, topic) {
     const subtopics = ["ALL", ...new Set(topic.notes.map(n => n.subtopic))];
@@ -217,11 +218,14 @@
 
     let html = `
       <div class="subtopic-filter-bar">
-        ${subtopics.map(st => `
-          <button class="subtopic-chip ${state.activeSubtopic === st ? "active" : ""}" data-sub="${st}">
-            ${st === "ALL" ? "Semua Subtopik (" + topic.notes.length + ")" : "Subtopik " + st}
-          </button>
-        `).join("")}
+        ${subtopics.map(st => {
+          const count = st === "ALL" ? topic.notes.length : topic.notes.filter(n => n.subtopic === st).length;
+          return `
+            <button class="subtopic-chip ${state.activeSubtopic === st ? "active" : ""}" data-sub="${st}">
+              ${st === "ALL" ? `All Subtopics (${count})` : `Section ${st} (${count} Subtopics)`}
+            </button>
+          `;
+        }).join("")}
       </div>
       <div class="notes-grid">
         ${filteredNotes.map(note => renderSingleNoteCard(note)).join("")}
@@ -251,7 +255,7 @@
     if (note.tableHeaders && note.tableRows) {
       tableHtml = `
         <h4 style="margin-top:22px; margin-bottom:10px; font-size:0.95rem; color:var(--berfest-crimson);">
-          📊 ${note.tableTitle || "Jadual Rujukan Pantas"}
+          📊 ${note.tableTitle || "Quick Reference Table"}
         </h4>
         <div class="berfest-table-wrap">
           <table class="berfest-table">
@@ -275,11 +279,11 @@
             <h3>${note.title}</h3>
             <p>${note.subtitle}</p>
           </div>
-          <span class="note-code-badge">Silibus ${note.code}</span>
+          <span class="note-code-badge">Syllabus ${note.code}</span>
         </div>
         <div class="note-card-body">
           <div class="concept-explanation-box">
-            <h4>💡 Penerangan Konsep & Analogi Mudah Faham</h4>
+            <h4>💡 Clear Concept Explanation & Key Takeaway</h4>
             <p>${formatInlineCode(note.concept)}</p>
           </div>
           <div class="berfest-feature-grid">
@@ -303,7 +307,7 @@
   }
 
   // ========================================================================
-  // 2. JALAN KERJA STEP-BY-STEP (HANDS-ON LABS)
+  // 2. STEP-BY-STEP PRACTICAL LABS
   // ========================================================================
   function renderTopicLabs(stage, topic) {
     const activeLab = topic.labs[state.activeLabIndex] || topic.labs[0];
@@ -311,21 +315,21 @@
     stage.innerHTML = `
       <div class="step-player-container">
         <aside class="step-lab-selector">
-          <h4>Pilih Modul Jalan Kerja</h4>
+          <h4>Select Practical Lab Module</h4>
           ${topic.labs.map((lab, idx) => `
             <button class="lab-list-btn ${idx === state.activeLabIndex ? "active" : ""}" data-lab-idx="${idx}">
               <span class="lab-badge-num">${idx + 1}</span>
               <span class="lab-btn-info">
                 <strong>${lab.title}</strong>
-                <span>${lab.steps.length} Langkah Lengkap</span>
+                <span>${lab.steps.length} Complete Steps</span>
               </span>
             </button>
           `).join("")}
           <div style="margin-top:16px; padding:14px; background:var(--bg-soft); border-radius:14px; border:1px solid var(--border-warm); font-size:0.8rem;">
-            <strong style="color:var(--berfest-crimson); display:block; margin-bottom:6px;">🚀 Cuba Terus di Browser!</strong>
-            <p style="color:var(--text-secondary); margin-bottom:10px;">Anda boleh menyalin arahan di sebelah dan mengujinya terus di dalam Simulator Terminal Linux.</p>
+            <strong style="color:var(--berfest-crimson); display:block; margin-bottom:6px;">🚀 Try Commands in Your Browser!</strong>
+            <p style="color:var(--text-secondary); margin-bottom:10px;">You can copy any command on the right and test it directly inside our interactive Linux Terminal Simulator.</p>
             <button class="btn-pill btn-pill-primary" id="open-sim-from-lab" style="width:100%; justify-content:center;">
-              Buka Simulator Terminal
+              Open Terminal Simulator
             </button>
           </div>
         </aside>
@@ -333,7 +337,7 @@
         <div class="step-stage-card">
           <div class="step-stage-header">
             <span style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; opacity:0.9; font-weight:800;">
-              PANDUAN AMALI LANGKAH DEMI LANGKAH • ${topic.code}
+              STEP-BY-STEP PRACTICAL LAB WALKTHROUGH • ${topic.code}
             </span>
             <h3 style="font-size:1.35rem; margin-top:4px;">${activeLab.title}</h3>
             <p style="font-size:0.86rem; opacity:0.92; margin-top:4px;">${activeLab.subtitle}</p>
@@ -344,20 +348,20 @@
                 <div class="step-item-card">
                   <div class="step-item-top">
                     <div class="step-circle">${sIdx + 1}</div>
-                    <h4>Langkah ${sIdx + 1}: ${step.title}</h4>
+                    <h4>Step ${sIdx + 1}: ${step.title}</h4>
                   </div>
                   <p class="step-desc">${formatInlineCode(step.desc)}</p>
                   <div class="terminal-code-box">
                     <div class="terminal-bar">
                       <div class="terminal-dots"><span></span><span></span><span></span></div>
-                      <span>Terminal / Arahan Konfigurasi</span>
-                      <button class="copy-cmd-btn" data-cmd="${encodeURIComponent(step.cmd)}">📋 Salin Arahan</button>
+                      <span>Terminal / Configuration Commands</span>
+                      <button class="copy-cmd-btn" data-cmd="${encodeURIComponent(step.cmd)}">📋 Copy Command</button>
                     </div>
                     <pre class="terminal-pre">${escapeHtml(step.cmd)}</pre>
                   </div>
                   <div class="step-why-note">
                     <span>💡</span>
-                    <div><strong>Kenapa langkah ini penting?</strong> ${formatInlineCode(step.why)}</div>
+                    <div><strong>Why is this step important?</strong> ${formatInlineCode(step.why)}</div>
                   </div>
                 </div>
               `).join("")}
@@ -378,9 +382,9 @@
       btn.addEventListener("click", () => {
         const raw = decodeURIComponent(btn.getAttribute("data-cmd"));
         navigator.clipboard?.writeText(raw);
-        btn.textContent = "✓ Berjaya Disalin!";
+        btn.textContent = "✓ Copied!";
         addXP(5);
-        setTimeout(() => { btn.textContent = "📋 Salin Arahan"; }, 1800);
+        setTimeout(() => { btn.textContent = "📋 Copy Command"; }, 1800);
       });
     });
 
@@ -392,7 +396,7 @@
   }
 
   // ========================================================================
-  // 3. SIMULASI INTERAKTIF MENGIKUT TOPIK
+  // 3. INTERACTIVE SIMULATORS PER TOPIC
   // ========================================================================
   function renderTopicSimulator(stage, topic) {
     if (topic.id === "topik-3") {
@@ -402,21 +406,20 @@
     } else if (topic.id === "topik-5") {
       renderBackupStrategySimulator(stage);
     } else {
-      // Topics 1 & 2 get embedded live terminal + interactive quick cards
       renderEmbeddedTerminalSimulator(stage, topic);
     }
   }
 
-  // Interactive Widget A: Linux chmod Calculator + FHS Explorer (Topic 3)
+  // Interactive Widget A: Linux chmod Calculator + Live Terminal (Topic 3)
   function renderChmodAndFhsSimulator(stage) {
     stage.innerHTML = `
       <div class="interactive-widget-card">
         <div class="widget-header">
           <div>
-            <h3 style="font-size:1.2rem;">🔐 Kalkulator & Visualiser Keizinan Linux (chmod Octal & Symbolic)</h3>
-            <p style="font-size:0.83rem; opacity:0.9;">Tandakan kotak Read (4), Write (2), Execute (1) atau Special Bits untuk melihat arahan chmod secara langsung!</p>
+            <h3 style="font-size:1.2rem;">🔐 Interactive Linux Permission Calculator (` + "`chmod`" + ` Octal & Symbolic Visualizer)</h3>
+            <p style="font-size:0.83rem; opacity:0.9;">Check or uncheck Read (4), Write (2), Execute (1), and Special Permission bits (SUID/SGID/Sticky) to see the live Octal and Symbolic output!</p>
           </div>
-          <span class="xp-badge">Subtopik 3.7 Interaktif</span>
+          <span class="xp-badge">Subtopic 3.7 Interactive</span>
         </div>
         <div class="widget-body">
           <div class="chmod-grid">
@@ -445,11 +448,11 @@
 
           <div class="chmod-result-banner">
             <div>
-              <div style="font-size:0.75rem; color:#94A3B8; text-transform:uppercase;">Arahan Oktal Linux</div>
-              <div class="chmod-big-octal" id="chmod-cmd-display">chmod 750 skrip_pelayan.sh</div>
+              <div style="font-size:0.75rem; color:#94A3B8; text-transform:uppercase;">Linux Octal Command</div>
+              <div class="chmod-big-octal" id="chmod-cmd-display">chmod 750 health_check.sh</div>
             </div>
             <div>
-              <div style="font-size:0.75rem; color:#94A3B8; text-transform:uppercase;">Paparan ls -l (Simbolik)</div>
+              <div style="font-size:0.75rem; color:#94A3B8; text-transform:uppercase;">ls -l Symbolic String</div>
               <div class="chmod-big-sym" id="chmod-sym-display">-rwxr-x---</div>
             </div>
             <div>
@@ -485,7 +488,7 @@
       if (sp & 2) chars[6] = chars[6] === "x" ? "s" : "S";
       if (sp & 1) chars[9] = chars[9] === "x" ? "t" : "T";
 
-      document.getElementById("chmod-cmd-display").textContent = `chmod ${octStr} skrip_pelayan.sh`;
+      document.getElementById("chmod-cmd-display").textContent = `chmod ${octStr} health_check.sh`;
       document.getElementById("chmod-sym-display").textContent = chars.join("");
     }
 
@@ -513,7 +516,7 @@
     document.getElementById("chmod-preset-644")?.addEventListener("click", () => applyPreset(6, 4, 4, false));
     document.getElementById("chmod-preset-1777")?.addEventListener("click", () => applyPreset(7, 7, 7, true));
 
-    renderEmbeddedTerminalSimulator(document.getElementById("embedded-term-holder"), { code: "TOPIK 3.0" });
+    renderEmbeddedTerminalSimulator(document.getElementById("embedded-term-holder"), { code: "TOPIC 3.0" });
   }
 
   // Interactive Widget B: Windows Server Share vs NTFS Permission Simulator (Topic 4)
@@ -522,43 +525,43 @@
       <div class="interactive-widget-card">
         <div class="widget-header">
           <div>
-            <h3 style="font-size:1.2rem;">🪟 Simulator Keizinan Perkongsian Fail Windows Server (Share vs NTFS Permissions)</h3>
-            <p style="font-size:0.83rem; opacity:0.9;">Uji bagaimana Peraturan 'Most Restrictive' menentukan Effective Permission apabila pengguna mengakses \\\\SVR-JTMK\\BahanKuliah</p>
+            <h3 style="font-size:1.2rem;">🪟 Windows Server File Sharing Permission Simulator (Share vs NTFS Permissions)</h3>
+            <p style="font-size:0.83rem; opacity:0.9;">Test how the 'Most Restrictive' and 'Explicit Deny' rules calculate Effective Permissions when accessing \\\\SVR-DC01\\CourseNotes</p>
           </div>
-          <span class="xp-badge">Subtopik 4.3 Interaktif</span>
+          <span class="xp-badge">Subtopic 4.3 Interactive</span>
         </div>
         <div class="widget-body">
           <div class="chmod-grid">
             <div class="chmod-col">
-              <h5>1. Pilih Share Permission (SMB)</h5>
+              <h5>1. Select Share Permission (SMB)</h5>
               <select id="win-share-sel" style="width:100%; padding:10px; border-radius:10px; border:1.5px solid var(--border-warm); font-weight:700;">
-                <option value="3">Full Control (Baca, Tulis, Ubah, Padam)</option>
-                <option value="2" selected>Change (Baca, Tulis, Ubah, Padam)</option>
-                <option value="1">Read (Baca & Lihat Sahaja)</option>
+                <option value="3">Full Control (Read, Write, Modify, Delete)</option>
+                <option value="2" selected>Change (Read, Write, Modify, Delete)</option>
+                <option value="1">Read (View & Execute Only)</option>
               </select>
               <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:10px;">
-                Ditetapkan pada tab <em>Sharing -> Advanced Sharing -> Permissions</em>.
+                Configured under <em>Properties -> Sharing -> Advanced Sharing -> Permissions</em>.
               </p>
             </div>
             <div class="chmod-col">
-              <h5>2. Pilih NTFS Permission (Security)</h5>
+              <h5>2. Select NTFS Permission (Security)</h5>
               <select id="win-ntfs-sel" style="width:100%; padding:10px; border-radius:10px; border:1.5px solid var(--border-warm); font-weight:700;">
                 <option value="3">Full Control</option>
-                <option value="2">Modify (Baca, Tulis, Ubah, Padam)</option>
-                <option value="1" selected>Read & Execute (Baca Sahaja)</option>
-                <option value="0">Explicit Deny (Sekat Akses)</option>
+                <option value="2">Modify (Read, Write, Modify, Delete)</option>
+                <option value="1" selected>Read & Execute (Read Only)</option>
+                <option value="0">Explicit Deny (Block Access)</option>
               </select>
               <p style="font-size:0.78rem; color:var(--text-secondary); margin-top:10px;">
-                Ditetapkan pada tab <em>Security (NTFS ACL)</em>.
+                Configured under <em>Properties -> Security (NTFS ACL)</em>.
               </p>
             </div>
             <div class="chmod-col" style="background:#0F172A; color:#fff;">
-              <h5 style="color:#FBBF24;">3. Keizinan Berkuat Kuasa (Effective)</h5>
+              <h5 style="color:#FBBF24;">3. Resulting Effective Permission</h5>
               <div id="win-eff-result" style="font-size:1.35rem; font-weight:900; color:#34D399; margin:8px 0;">
-                READ SAHAJA
+                READ ONLY
               </div>
               <p id="win-eff-reason" style="font-size:0.8rem; color:#CBD5E1;">
-                Kerana antara Share (Change) dan NTFS (Read), tahap READ adalah lebih ketat (Most Restrictive).
+                Between Share (Change) and NTFS (Read), READ is more restrictive and wins.
               </p>
             </div>
           </div>
@@ -573,48 +576,48 @@
       const reasonEl = document.getElementById("win-eff-reason");
 
       if (nVal === 0) {
-        resEl.textContent = "TIADA AKSES (DENIED)";
+        resEl.textContent = "ACCESS DENIED";
         resEl.style.color = "#F87171";
-        reasonEl.textContent = "Peraturan Explicit Deny sentiasa mengatasi sebarang kebenaran Allow!";
+        reasonEl.textContent = "An Explicit Deny permission always overrides any Allow permission!";
         return;
       }
       const eff = Math.min(sVal, nVal);
-      const names = ["TIADA", "READ SAHAJA (Baca)", "CHANGE / MODIFY (Baca, Tulis & Padam)", "FULL CONTROL (Kawalan Penuh)"];
+      const names = ["NONE", "READ ONLY (View & Open)", "CHANGE / MODIFY (Read, Write & Delete)", "FULL CONTROL (All Rights)"];
       resEl.textContent = names[eff];
       resEl.style.color = eff === 1 ? "#FBBF24" : "#34D399";
-      reasonEl.textContent = `Peraturan Most Restrictive memilih tahap yang lebih ketat antara Share dan NTFS untuk akses rangkaian UNC.`;
+      reasonEl.textContent = `The Most Restrictive Rule selects the stricter level between Share and NTFS permissions for network access.`;
     }
 
     document.getElementById("win-share-sel")?.addEventListener("change", calcWinPerm);
     document.getElementById("win-ntfs-sel")?.addEventListener("change", calcWinPerm);
   }
 
-  // Interactive Widget C: Backup Strategy & Restore Simulator (Topic 5)
+  // Interactive Widget C: Backup Strategy & Disaster Recovery Simulator (Topic 5)
   function renderBackupStrategySimulator(stage) {
     stage.innerHTML = `
       <div class="interactive-widget-card">
         <div class="widget-header">
           <div>
-            <h3 style="font-size:1.2rem;">🛡️ Simulator Strategi Backup & Pemulihan Bencana (Full vs Differential vs Incremental)</h3>
-            <p style="font-size:0.83rem; opacity:0.9;">Pilih jenis sandaran harian (Isnin–Jumaat) dan hari berlakunya kerosakan pelayan untuk melihat set sandaran yang diperlukan semasa Restore!</p>
+            <h3 style="font-size:1.2rem;">🛡️ Server Backup & Disaster Recovery Simulator (Full vs Differential vs Incremental)</h3>
+            <p style="font-size:0.83rem; opacity:0.9;">Choose your weekday backup method (after Sunday's Full Backup) and the day of a disk crash to calculate the exact backup sets needed for restoration!</p>
           </div>
-          <span class="xp-badge">Subtopik 5.1 Interaktif</span>
+          <span class="xp-badge">Subtopic 5.1 Interactive</span>
         </div>
         <div class="widget-body">
           <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px;">
             <div style="flex:1; min-width:240px;">
-              <label style="font-weight:800; font-size:0.85rem; display:block; margin-bottom:6px;">Jenis Backup Harian (Selepas Full Backup Ahad):</label>
+              <label style="font-weight:800; font-size:0.85rem; display:block; margin-bottom:6px;">Daily Backup Type (Monday–Friday after Sunday Full Backup):</label>
               <select id="bkp-type-sel" style="width:100%; padding:11px; border-radius:12px; border:1.5px solid var(--border-warm); font-weight:700;">
-                <option value="diff">Differential Backup (Kumulatif sejak Ahad)</option>
-                <option value="inc">Incremental Backup (Perubahan sejak semalam)</option>
+                <option value="diff">Differential Backup (Cumulative since Sunday Full)</option>
+                <option value="inc">Incremental Backup (Changes since previous day only)</option>
               </select>
             </div>
             <div style="flex:1; min-width:240px;">
-              <label style="font-weight:800; font-size:0.85rem; display:block; margin-bottom:6px;">Hari Pelayan Mengalami Kerosakan Cakera:</label>
+              <label style="font-weight:800; font-size:0.85rem; display:block; margin-bottom:6px;">Day Server Suffers Disk Crash:</label>
               <select id="bkp-day-sel" style="width:100%; padding:11px; border-radius:12px; border:1.5px solid var(--border-warm); font-weight:700;">
-                <option value="2">Selasa Pagi (Data sehingga Isnin Malam)</option>
-                <option value="4" selected>Khamis Pagi (Data sehingga Rabu Malam)</option>
-                <option value="6">Sabtu Pagi (Data sehingga Jumaat Malam)</option>
+                <option value="2">Tuesday Morning (Recover through Monday Night)</option>
+                <option value="4" selected>Thursday Morning (Recover through Wednesday Night)</option>
+                <option value="6">Saturday Morning (Recover through Friday Night)</option>
               </select>
             </div>
           </div>
@@ -627,35 +630,35 @@
     function updateBkpSim() {
       const type = document.getElementById("bkp-type-sel").value;
       const day = parseInt(document.getElementById("bkp-day-sel").value, 10);
-      const dayNames = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat"];
+      const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
       const lastNight = dayNames[day - 1];
       const out = document.getElementById("bkp-sim-output");
 
       if (type === "diff") {
         out.innerHTML = `
           <div>
-            <div style="font-size:0.75rem; color:#94A3B8;">BILANGAN SET UNTUK RESTORE</div>
-            <div class="chmod-big-octal">2 Set Sahaja</div>
+            <div style="font-size:0.75rem; color:#94A3B8;">BACKUP SETS REQUIRED FOR RESTORE</div>
+            <div class="chmod-big-octal">2 Sets Only</div>
             <div style="color:#34D399; font-size:0.88rem; margin-top:4px;">
-              1. <strong>Full Backup (Ahad)</strong> + 2. <strong>Differential Backup (${lastNight})</strong>
+              1. <strong>Full Backup (Sunday)</strong> + 2. <strong>Differential Backup (${lastNight})</strong>
             </div>
           </div>
           <div style="max-width:420px; font-size:0.83rem; color:#E2E8F0;">
-            💡 <strong>Kenapa?</strong> Kerana Differential Backup pada malam <strong>${lastNight}</strong> sudah mengandungi semua perubahan sejak Full Backup hari Ahad! Masa pemulihan (RTO) adalah pantas.
+            💡 <strong>Why?</strong> Because Differential Backup does NOT clear the Archive Bit, <strong>${lastNight}'s</strong> Differential already contains all changes since Sunday's Full Backup! Fast recovery time (RTO).
           </div>
         `;
       } else {
         const neededDays = dayNames.slice(1, day).map(d => `Incremental (${d})`).join(" + ");
         out.innerHTML = `
           <div>
-            <div style="font-size:0.75rem; color:#94A3B8;">BILANGAN SET UNTUK RESTORE</div>
-            <div class="chmod-big-octal">${day} Set Berturut-turut</div>
+            <div style="font-size:0.75rem; color:#94A3B8;">BACKUP SETS REQUIRED FOR RESTORE</div>
+            <div class="chmod-big-octal">${day} Sequential Sets</div>
             <div style="color:#FBBF24; font-size:0.88rem; margin-top:4px;">
-              <strong>Full Backup (Ahad)</strong> + ${neededDays}
+              <strong>Full Backup (Sunday)</strong> + ${neededDays}
             </div>
           </div>
           <div style="max-width:420px; font-size:0.83rem; color:#E2E8F0;">
-            💡 <strong>Kenapa?</strong> Incremental Backup hanya menyimpan perubahan harian. Anda mesti memulihkan Full Backup Ahad diikuti <strong>SETIAP</strong> Incremental mengikut urutan hari tanpa tertinggal!
+            💡 <strong>Why?</strong> Incremental Backups only store changes since the previous day's backup. You must restore Sunday's Full Backup followed by <strong>EVERY</strong> Incremental set in exact chronological order!
           </div>
         `;
       }
@@ -664,7 +667,7 @@
     document.getElementById("bkp-type-sel")?.addEventListener("change", updateBkpSim);
     document.getElementById("bkp-day-sel")?.addEventListener("change", updateBkpSim);
     updateBkpSim();
-    renderEmbeddedTerminalSimulator(document.getElementById("embedded-term-holder-5"), { code: "TOPIK 5.0" });
+    renderEmbeddedTerminalSimulator(document.getElementById("embedded-term-holder-5"), { code: "TOPIC 5.0" });
   }
 
   // Embedded or Full Live Linux Terminal Simulator
@@ -675,16 +678,16 @@
     stage.innerHTML = `
       <div class="live-terminal-layout">
         <div class="mission-panel">
-          <h4 style="color:var(--berfest-crimson); font-size:0.95rem; margin-bottom:6px;">🎯 6 Misi Amali CLI Linux</h4>
+          <h4 style="color:var(--berfest-crimson); font-size:0.95rem; margin-bottom:6px;">🎯 6 Guided Linux CLI Missions</h4>
           <p style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:14px;">
-            Klik mana-mana misi untuk menyalin petunjuk arahan atau taip sendiri di dalam terminal!
+            Click any mission card to pre-fill its hint command, or type any Linux command directly in the terminal!
           </p>
           <div id="mission-list-box">
             ${missions.map(m => `
               <div class="mission-item ${m.done ? "done" : ""}" data-hint="${m.hintCmd}">
                 <div class="mission-item-header">
                   <span>${m.title}</span>
-                  <span>${m.done ? "✅ Selesai" : m.topic}</span>
+                  <span>${m.done ? "✅ Completed" : m.topic}</span>
                 </div>
                 <div style="color:var(--text-secondary); font-size:0.77rem;">${formatInlineCode(m.desc)}</div>
               </div>
@@ -699,18 +702,18 @@
             <button class="copy-cmd-btn" id="term-reset-btn">Reset FS</button>
           </div>
           <div class="terminal-quick-cmds">
-            <span style="color:#94A3B8; font-size:0.74rem; align-self:center; margin-right:4px;">Klik Pantas:</span>
+            <span style="color:#94A3B8; font-size:0.74rem; align-self:center; margin-right:4px;">Quick Run:</span>
             ${["help", "pwd", "ls -la", "ip a", "cat /etc/passwd", "grep -i error /var/log/syslog", "ps aux", "lsof", "parted -l", "clear"].map(c => `
               <button class="quick-cmd-chip" data-qcmd="${c}">${c}</button>
             `).join("")}
           </div>
           <div class="terminal-output-screen" id="term-screen">
-            <div class="term-line" style="color:#FBBF24; font-weight:700;">Selamat Datang ke Simulator Pelayan Linux DFK40063 (Ubuntu 22.04 LTS)!</div>
-            <div class="term-line" style="color:#94A3B8;">Taip 'help' dan tekan Enter, atau klik butang arahan pantas di atas untuk memulakan amali.</div>
+            <div class="term-line" style="color:#FBBF24; font-weight:700;">Welcome to the DFK40063 Interactive Linux Server Simulator (Ubuntu 22.04 LTS)!</div>
+            <div class="term-line" style="color:#94A3B8;">Type 'help' and press Enter, or click any Quick Run button above to start practicing.</div>
           </div>
           <form class="term-input-row" id="term-form">
             <span class="term-prompt-label" id="term-prompt-span">${window.LinuxSimulator.getPrompt()}</span>
-            <input type="text" class="term-input-field" id="term-input" placeholder="Taip arahan Linux di sini (contoh: ls -la, chmod 755 semak.sh, ps aux)..." autocomplete="off" />
+            <input type="text" class="term-input-field" id="term-input" placeholder="Type a Linux command here (e.g., ls -la, chmod 755 health_check.sh, ps aux)..." autocomplete="off" />
           </form>
         </div>
       </div>
@@ -747,7 +750,7 @@
         mDiv.className = "term-line";
         mDiv.style.color = "#34D399";
         mDiv.style.fontWeight = "800";
-        mDiv.textContent = `🎉 TAHNIAH! Anda telah menyelesaikan [${res.missionUnlocked.title}] (+25 XP)!`;
+        mDiv.textContent = `🎉 CONGRATULATIONS! You completed [${res.missionUnlocked.title}] (+25 XP)!`;
         screen.appendChild(mDiv);
         refreshMissionPanel();
       }
@@ -763,7 +766,7 @@
         <div class="mission-item ${m.done ? "done" : ""}" data-hint="${m.hintCmd}">
           <div class="mission-item-header">
             <span>${m.title}</span>
-            <span>${m.done ? "✅ Selesai" : m.topic}</span>
+            <span>${m.done ? "✅ Completed" : m.topic}</span>
           </div>
           <div style="color:var(--text-secondary); font-size:0.77rem;">${formatInlineCode(m.desc)}</div>
         </div>
@@ -807,27 +810,27 @@
     container.innerHTML = `
       <section class="berfest-hero" style="padding:28px 36px; margin-bottom:22px;">
         <div class="hero-left">
-          <div class="berfest-corner-tag"><span class="dot"></span><span>MAKMAL MAYA INTERAKTIF</span></div>
-          <h2>Simulator <span class="accent-text">Terminal Linux</span> DFK40063</h2>
-          <p>Uji semua arahan Linux Server Administration (FHS, ls, grep, chmod, chown, useradd, tar, ps, lsof, parted, kill) secara langsung di dalam pelayar tanpa risiko merosakkan sistem sebenar!</p>
+          <div class="berfest-corner-tag"><span class="dot"></span><span>INTERACTIVE VIRTUAL LAB</span></div>
+          <h2>DFK40063 <span class="accent-text">Linux Terminal</span> Simulator</h2>
+          <p>Practice Linux Server Administration commands (FHS navigation, ls, grep, chmod, chown, useradd, tar, dump, ps, lsof, parted, kill) directly in your browser inside a safe virtual filesystem!</p>
         </div>
         <div class="hero-right">
           <div class="berfest-floating-stat">
             <div class="stat-ring"><div class="stat-ring-inner">CLI</div></div>
             <div class="stat-info">
               <h4>Ubuntu 22.04 Server Sandbox</h4>
-              <p>Lengkap dengan sistem fail maya /etc, /home, /var/log & 6 Misi</p>
+              <p>Includes virtual /etc, /home, /var/log filesystem & 6 Guided Missions</p>
             </div>
           </div>
         </div>
       </section>
       <div id="full-term-stage"></div>
     `;
-    renderEmbeddedTerminalSimulator(document.getElementById("full-term-stage"), { code: "SEMUA TOPIK" });
+    renderEmbeddedTerminalSimulator(document.getElementById("full-term-stage"), { code: "ALL TOPICS" });
   }
 
   // ========================================================================
-  // 4. SOALAN LATIHAN MENGIKUT TOPIK (INTERACTIVE QUIZ)
+  // 4. TOPIC PRACTICE QUIZ (INTERACTIVE SELF-ASSESSMENT)
   // ========================================================================
   function renderTopicQuiz(stage, topic) {
     let answeredCount = 0;
@@ -839,16 +842,16 @@
       <div class="quiz-header-card">
         <div>
           <span style="font-size:0.76rem; font-weight:800; text-transform:uppercase; letter-spacing:0.08em;">
-            PENILAIAN KENDIRI & LATIHAN TOPIK • ${topic.code}
+            TOPIC PRACTICE QUIZ & SELF-ASSESSMENT • ${topic.code}
           </span>
-          <h3 style="font-size:1.5rem; margin-top:4px;">Uji Kefahaman: ${topic.shortTitle}</h3>
+          <h3 style="font-size:1.5rem; margin-top:4px;">Knowledge Check: ${topic.shortTitle}</h3>
           <p style="font-size:0.88rem; opacity:0.92; margin-top:4px;">
-            Pilih jawapan yang paling tepat. Penerangan terperinci akan dipaparkan serta-merta selepas anda menjawab setiap soalan.
+            Select the best answer for each question. Instant feedback and a detailed explanation will appear immediately.
           </p>
         </div>
         <div class="quiz-score-circle">
           <strong id="live-quiz-score">0 / ${totalQ}</strong>
-          <span style="font-size:0.75rem;">Markah Semasa</span>
+          <span style="font-size:0.75rem;">Current Score</span>
         </div>
       </div>
 
@@ -856,7 +859,7 @@
         ${topic.quizzes.map((qItem, qIdx) => `
           <div class="quiz-question-card" data-qidx="${qIdx}">
             <div class="quiz-q-top">
-              <div class="quiz-q-num">S${qIdx + 1}</div>
+              <div class="quiz-q-num">Q${qIdx + 1}</div>
               <div class="quiz-q-text">${formatInlineCode(qItem.q)}</div>
             </div>
             <div class="quiz-options-grid">
@@ -868,7 +871,7 @@
               `).join("")}
             </div>
             <div class="quiz-explanation" id="quiz-exp-${qIdx}">
-              <strong>📘 Ulasan & Penerangan Jawapan:</strong><br/>
+              <strong>📘 Answer Explanation:</strong><br/>
               ${formatInlineCode(qItem.explanation)}
             </div>
           </div>
@@ -876,7 +879,7 @@
       </div>
 
       <div style="text-align:center; margin-top:24px;">
-        <button class="btn-pill btn-pill-primary" id="reset-quiz-btn">🔄 Cuba Semula Soalan Latihan Ini</button>
+        <button class="btn-pill btn-pill-primary" id="reset-quiz-btn">🔄 Retry This Topic Quiz</button>
       </div>
     `;
 
@@ -887,7 +890,6 @@
         const qData = topic.quizzes[qIdx];
         const card = btn.closest(".quiz-question-card");
 
-        // Disable all buttons in this question
         card.querySelectorAll(".quiz-opt-btn").forEach((b, idx) => {
           b.disabled = true;
           if (idx === qData.answer) b.classList.add("correct");
@@ -918,35 +920,35 @@
   }
 
   // ========================================================================
-  // 5. INFO KURSUS, CLO, SLT & AGIHAN PENILAIAN (SYLLABUS PAGE 1-8)
+  // 5. COURSE INFORMATION, CLO, SLT & ASSESSMENT BREAKDOWN (SYLLABUS PAGES 1-8)
   // ========================================================================
   function renderCourseInfoView(container) {
     container.innerHTML = `
       <section class="berfest-hero">
         <div class="hero-left">
-          <div class="berfest-corner-tag"><span class="dot"></span><span>MAKLUMAT RASMI KURSUS JPPKK</span></div>
+          <div class="berfest-corner-tag"><span class="dot"></span><span>OFFICIAL JPPKK COURSE INFORMATION</span></div>
           <h2>DFK40063 <span class="accent-text">Server Administration</span></h2>
-          <p>Kursus ini direka untuk memberi pemahaman menyeluruh serta kemahiran praktikal (hands-on) dalam mentadbir, mengkonfigurasi, dan menyelenggara sistem pengoperasian pelayan Linux dan Windows Server.</p>
+          <p>SERVER ADMINISTRATION is designed to provide a comprehensive understanding of both Linux and Windows server operating systems. Students gain hands-on experience and practical knowledge in administering, configuring, and maintaining Linux and Windows Server environments.</p>
           <div class="hero-badges">
-            <div class="clo-pill"><span>Kredit</span> 3.0 Nilai Kredit</div>
-            <div class="clo-pill"><span>Semester</span> Semester 4 / Tahun 2</div>
-            <div class="clo-pill"><span>Prasyarat</span> Tiada (None)</div>
-            <div class="clo-pill"><span>Jumlah SLT</span> 120 Jam</div>
+            <div class="clo-pill"><span>Credit Value</span> 3 Credits</div>
+            <div class="clo-pill"><span>Offered</span> Semester 4 / Year 2</div>
+            <div class="clo-pill"><span>Prerequisite</span> None</div>
+            <div class="clo-pill"><span>Grand Total SLT</span> 120 Hours</div>
           </div>
         </div>
         <div class="hero-right">
           <div class="berfest-floating-stat">
             <div class="stat-ring"><div class="stat-ring-inner">70%</div></div>
             <div class="stat-info">
-              <h4>Penilaian Berterusan (CA)</h4>
-              <p>Practical Work, PBA, Presentation & Case Study</p>
+              <h4>Continuous Assessment (CA)</h4>
+              <p>Practical Work (20%), PBA (15%), Presentation (10%), Case Study (25%)</p>
             </div>
           </div>
           <div class="berfest-floating-stat">
             <div class="stat-ring"><div class="stat-ring-inner">30%</div></div>
             <div class="stat-info">
-              <h4>Penilaian Akhir (FA / FE)</h4>
-              <p>Amali / Peperiksaan Akhir Semester (Topik 1–4)</p>
+              <h4>Final Assessment (FA / FE)</h4>
+              <p>End-of-Semester Practical / Final Assessment (Topics 1–4)</p>
             </div>
           </div>
         </div>
@@ -955,86 +957,89 @@
       <div class="berfest-note-card" style="margin-bottom:26px;">
         <div class="note-card-header">
           <div class="note-title-group">
-            <h3>Hasil Pembelajaran Kursus (Course Learning Outcomes - CLO)</h3>
-            <p>Pemetaan CLO kepada PLO, Kaedah Pengajaran & Kaedah Penilaian</p>
+            <h3>Course Learning Outcomes (CLO) & Assessment Mapping</h3>
+            <p>Mapping of CLO to Programme Learning Outcomes (PLO), Teaching Methods, and Assessments</p>
           </div>
-          <span class="note-code-badge">Item 7 & 8 Silibus</span>
+          <span class="note-code-badge">Syllabus Items 7, 8 & 14</span>
         </div>
         <div class="note-card-body">
           <div class="berfest-feature-grid">
             <div class="berfest-mini-card">
               <div class="mini-card-icon">CLO1</div>
               <h5>Construct Graphical & CLI Utilities (P3, PLO3)</h5>
-              <p>Membina pelbagai utiliti grafik (GUI) dan baris perintah (CLI) dalam Windows Server dan Linux bagi memastikan operasi sistem berjalan lancar.</p>
+              <p>Construct various graphical and command line utilities in Windows Server and Linux to ensure the proper operation of the system.</p>
               <ul>
-                <li><strong>Penilaian:</strong> Practical Work (20%) & Final Assessment (30%)</li>
+                <li><strong>Teaching Method:</strong> Practical Activity</li>
+                <li><strong>Assessment:</strong> Practical Work (20%) & Final Assessment (30%)</li>
               </ul>
             </div>
             <div class="berfest-mini-card">
               <div class="mini-card-icon">CLO2</div>
               <h5>Perform Server Services (P4, PLO6)</h5>
-              <p>Melaksanakan pelbagai jenis perkhidmatan pelayan (services) menggunakan Windows Server dan Linux.</p>
+              <p>Perform different types of services using Windows Server and Linux.</p>
               <ul>
-                <li><strong>Penilaian:</strong> Problem Based Assignment / PBA (15%)</li>
+                <li><strong>Teaching Method:</strong> Discussion</li>
+                <li><strong>Assessment:</strong> Problem Based Assignment (15%)</li>
               </ul>
             </div>
             <div class="berfest-mini-card">
               <div class="mini-card-icon">CLO3</div>
               <h5>Demonstrate Good Ethical Practices (A3, PLO11)</h5>
-              <p>Mempamerkan amalan beretika yang baik semasa melaksanakan pelbagai fungsi autonomi untuk pelayan sistem.</p>
+              <p>Demonstrate good ethical practices when performing various autonomous functions for a system server.</p>
               <ul>
-                <li><strong>Penilaian:</strong> Presentation PBA (10%) & Case Study (25%)</li>
+                <li><strong>Teaching Method:</strong> Collaborative Learning & Discussion</li>
+                <li><strong>Assessment:</strong> Presentation (10%) & Case Study (25%)</li>
               </ul>
             </div>
           </div>
 
-          <h4 style="margin-top:24px; margin-bottom:10px; color:var(--berfest-crimson);">📊 Jadual Agihan Penilaian Kursus (Continuous Assessment 70% + Final Assessment 30%)</h4>
+          <h4 style="margin-top:24px; margin-bottom:10px; color:var(--berfest-crimson);">📊 Complete Assessment Specification Table (Continuous Assessment 70% + Final Assessment 30%)</h4>
           <div class="berfest-table-wrap">
             <table class="berfest-table">
               <thead>
                 <tr>
-                  <th>Jenis Penilaian</th>
-                  <th>Bilangan</th>
-                  <th>Pemberatan (%)</th>
-                  <th>CLO Dinilai</th>
-                  <th>Topik Disarankan</th>
+                  <th>Assessment Type</th>
+                  <th>Quantity</th>
+                  <th>Weightage (%)</th>
+                  <th>CLO Assessed</th>
+                  <th>Suggested Topics</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Practical Work (Kerja Amali)</strong></td>
-                  <td>3 Amali</td>
+                  <td><strong>Practical Work</strong></td>
+                  <td>3 Tasks</td>
                   <td><strong>20%</strong></td>
-                  <td>CLO 1 (P3)</td>
-                  <td>Topik 3 & Topik 4</td>
+                  <td>CLO 1 (P3, PLO3)</td>
+                  <td>Topic 3 & Topic 4</td>
                 </tr>
                 <tr>
                   <td><strong>Problem Based Assignment (PBA)</strong></td>
-                  <td>1 Tugasan</td>
+                  <td>1 Assignment</td>
                   <td><strong>15%</strong></td>
-                  <td>CLO 2 (P4)</td>
-                  <td>Topik 3, Topik 4 & Topik 5</td>
+                  <td>CLO 2 (P4, PLO6)</td>
+                  <td>Topic 3, Topic 4 & Topic 5</td>
                 </tr>
                 <tr>
                   <td><strong>Presentation (Problem Based Assignment)</strong></td>
-                  <td>1 Pembentangan</td>
+                  <td>1 Presentation</td>
                   <td><strong>10%</strong></td>
-                  <td>CLO 3 (A3)</td>
-                  <td>Topik 3, Topik 4 & Topik 5</td>
+                  <td>CLO 3 (A3, PLO11)</td>
+                  <td>Topic 3, Topic 4 & Topic 5</td>
                 </tr>
                 <tr>
-                  <td><strong>Case Study (Kajian Kes)</strong></td>
-                  <td>1 Kajian Kes</td>
+                  <td><strong>Case Study</strong></td>
+                  <td>1 Case Study</td>
                   <td><strong>25%</strong></td>
-                  <td>CLO 3 (A3)</td>
-                  <td>Topik 4 & Topik 5</td>
+                  <td>CLO 3 (A3, PLO11)</td>
+                  <td>Topic 4 & Topic 5</td>
                 </tr>
                 <tr>
-                  <td><strong>Final Assessment (Penilaian Akhir)</strong></td>
-                  <td>1 Penilaian Akhir</td>
+                  <td><strong>Final Assessment (FE / FA)</strong></td>
+                  <td>1 Final Exam</td>
                   <td><strong>30%</strong></td>
-                  <td>CLO 1 (P3)</td>
-                  <td>Topik 1, Topik 2, Topik 3 & Topik 4</td>
+                  <td>CLO 1 (P3, PLO3)</td>
+                  <td>Topic 1, Topic 2, Topic 3 & Topic 4</td>
                 </tr>
               </tbody>
             </table>
@@ -1062,13 +1067,13 @@
 
     container.innerHTML = `
       <div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
-        <h3>🔍 Hasil Carian untuk "${escapeHtml(query)}" (${results.length} nota ditemui)</h3>
-        <button class="btn-pill btn-pill-outline" id="clear-search-btn">✕ Padam Carian</button>
+        <h3>🔍 Search Results for "${escapeHtml(query)}" (${results.length} subtopics found)</h3>
+        <button class="btn-pill btn-pill-outline" id="clear-search-btn">✕ Clear Search</button>
       </div>
       <div class="notes-grid">
         ${results.length
           ? results.map(r => renderSingleNoteCard(r.note)).join("")
-          : `<div class="berfest-note-card" style="padding:32px; text-align:center;">Tiada nota sepadan ditemui. Cuba kata kunci seperti <code>chmod</code>, <code>Active Directory</code>, <code>SSH</code>, <code>tar</code>, atau <code>grep</code>.</div>`
+          : `<div class="berfest-note-card" style="padding:32px; text-align:center;">No matching subtopics found. Try keywords like <code>chmod</code>, <code>Active Directory</code>, <code>SSH</code>, <code>tar</code>, <code>lsof</code>, or <code>grep</code>.</div>`
         }
       </div>
     `;
@@ -1108,8 +1113,8 @@
       const btn = document.getElementById("btn-toggle-presentation");
       if (btn) {
         btn.innerHTML = state.presentationMode
-          ? "🖥️ Keluar Mod Slide"
-          : "📽️ Mod Pembentangan Kelas";
+          ? "🖥️ Exit Slide Mode"
+          : "📽️ Classroom Presentation Mode";
       }
     });
 
